@@ -33,6 +33,12 @@ describe SessionsController do
       get :new
       response.should have_selector("input[name='commit'][type='submit']")
     end
+
+    it "should redirect to the user show page if user is signed in" do
+      user = test_sign_in(Factory(:user))
+      get :new
+      response.should redirect_to(user_path(user))
+    end
   end
 
   describe "POST 'create'" do
